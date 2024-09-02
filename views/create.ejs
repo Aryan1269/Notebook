@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khaatabook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <%- include("partials/nav" , { path : "/home" , pathName : "HomePage" }) %>
+        <div class="container mx-auto px-4 py-8">
+            <form action="/submit" method="post">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Create New Hisaab</h2>
+                <span class="p-6 mb-4 text-red-500 uppercase"><%=error%></span>
+                <div class="bg-white shadow rounded-lg p-6">
+                    <div class="mb-4">
+                        <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
+                        <input type="text" id="title" name="title" maxlength="10"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100" />
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="block text-gray-700 text-sm font-bold mb-2">description</label>
+                        <textarea id="description" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline
+                    resize-none bg-gray-100" rows="5"></textarea>
+                    </div>
+                    <!--checkbox-->
+                    <div class="flex items-center mb-4">
+                        <!-- <input type="hidden" name="encrypt" value="false"> -->
+                        <input id="encrypt" type="checkbox" value="true" name="encrypt"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="encrypt" id="enc" class="ml-2 text-gray-700">Encrypt this file</label>
+                    </div>
+                    <div id="passcode" class="mb-4 ">
+                        <label for="encrypt-password"
+                            class="block text-gray-700 text-sm font-bold mb-2">Passcode</label>
+                        <input type="password" id="encrypt-password" name="passcode" 
+                            class="shadow appearance-none border rounded bg-gray-100 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    <!--checkbox-password end-->
+                    <div class="flex items-center mb-4">
+                        <!-- <input type="hidden" name="shareable" value="false"> -->
+                        <input id="shareable" type="checkbox" name="shareable" value="true"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="shareable" class="ml-2 text-gray-700">Shareable file?</label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input id="permissions" type="checkbox"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="permissions" class="ml-2 text-gray-700">Edit permissions.</label>
+                    </div>
+                    <button
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create
+                        New Hisaab</button>
+                </div>
+
+            </form>
+        </div>
+
+        <script>
+            const checkbox = document.querySelector('#encrypt');
+            const encryptPassword = document.querySelector('#passcode');
+
+            // Function to toggle the visibility of the passcode input
+            function togglePasscodeVisibility() {
+                if (checkbox.checked) {
+                    encryptPassword.classList.remove("hidden");
+                } else {
+                    encryptPassword.classList.add("hidden");
+                }
+            }
+
+            // Initial check to set the visibility based on the default checkbox state
+            togglePasscodeVisibility();
+
+            // Add event listener to the checkbox
+            checkbox.addEventListener('change', togglePasscodeVisibility);
+        </script>
+</body>
+
+</html>
