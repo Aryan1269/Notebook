@@ -4,9 +4,9 @@ const joi = require("joi");
 const userSchema = new db.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
-  date : {
-    type : Date,
-    default : Date.now,
+  date: {
+    type: Date,
+    default: Date.now,
   },
   notes: [
     {
@@ -14,8 +14,9 @@ const userSchema = new db.Schema({
       ref: "note",
     },
   ],
-  restToken : String,
-  restSession : Date,
+  
+  restToken: String,
+  restSession: Date,
 });
 
 function validateModel(data) {
@@ -23,7 +24,6 @@ function validateModel(data) {
     .object({
       email: joi.string().email().required(),
       password: joi.string().min(6).max(30).required(),
-      
     })
     .validate(data);
 }

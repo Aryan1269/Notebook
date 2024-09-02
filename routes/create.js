@@ -13,12 +13,12 @@ router.get('/create',isAuth,(req,res)=>{
 router.post('/submit',isAuth, async (req,res)=>{
   // @ts-ignore
   
-  let {title,description,passcode} = req.body;
+  let {title,description,passcode,encrypt} = req.body;
  
     const user = await userSchema.UserModel.findById(req.session.user);
     
     // @ts-ignore
-    console.log(req.body.encrypt);
+    console.log(typeof encrypt);
     const { error } = noteSchema.noteValidate({ title, description , passcode});
     if(error){
       req.flash('error',`${error.details[0].message}`)
@@ -30,11 +30,12 @@ router.post('/submit',isAuth, async (req,res)=>{
       
       const noteData = await new noteSchema.noteModel({
         // @ts-ignore
-        user : user._id,
+        user: user._id,
         title,
         description,
         passcode,
-      })
+        encrypt: encrypt,
+      });
 
       // @ts-ignore
       user.notes.push(noteData._id);

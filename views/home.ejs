@@ -23,9 +23,16 @@
                 <div class=" max-w-[250px] w-[250px] h-[100px] rounded-md shadow-md shadow-gray-400 p-2">
                     <subnav class="text-xl flex align-center justify-between gap-3 mb-1">
                         <div>
-                            <i class="ri-lock-2-fill p-1"></i>
-                            <i class="ri-edit-line ml-2  p-1"></i>
+                            <% if (d.encrypt) { %>
+                                <i class="ri-lock-password-line p-1"></i>
+                                <% } else { %>
+                                    <i class="ri-lock-unlock-line p-1"></i>
+                                    <% } %>
+                                        <a href="/edit?id=<%=d._id%>"><i class="ri-edit-line ml-2  p-1"></i></a>
                         </div>
+                        <span>
+                            <%= dateStyle(d.date) %>
+                        </span>
                         <a href="/delete/<%=d._id %>"><i
                                 class="ri-delete-bin-6-fill text-red-400  bg-blue-600 p-1 rounded-md"></i></a>
                     </subnav>
@@ -39,7 +46,6 @@
                 <% }) %>
 
         </div>
-
 </body>
 
 </html>

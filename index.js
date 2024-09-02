@@ -8,10 +8,17 @@ const isAuth = require("./middleware/isAuth");
 const createPage = require("./routes/create");
 const deletePage = require("./routes/delete");
 const changePassword = require("./routes/changepassword");
+const edit = require("./routes/edit");
 
 let store = new mongodb_session({
   uri: "mongodb://127.0.0.1:27017/notebook",
   collection: "Sessions",
+});
+
+store.on("connected", async () => {
+  await store.db
+    .collection("Sessions")
+    .createIndex({ expires: 1 }, { expireAfterSeconds: 0 });
 });
 
 //routes importing
@@ -23,6 +30,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: store,
+    cookie: { maxAge: 60 * 60 * 1000 },
   })
 );
 
@@ -30,11 +38,12 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(flash());
 
-// @ts-ignore
+//pages
 app.use(homeRoutes);
 app.use(createPage);
 app.use(deletePage)
 app.use(changePassword)
+app.use(edit)
 
 app.get("/", (req, res) => {
   res.render("login", { error: req.flash("wrong") });

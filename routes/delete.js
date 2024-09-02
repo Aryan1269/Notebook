@@ -4,7 +4,7 @@ const { UserModel } = require("../models/users");
 
 const express = require("express");
 
-const router = express();
+const router = express.Router();
 
 router.get("/delete/:id", isAuth, async (req, res) => {
   const noteId = req.params.id; // Extract the ID from req.params

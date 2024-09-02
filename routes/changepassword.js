@@ -35,7 +35,7 @@ router.post("/rest", async (req, res) => {
     user.restToken = uuid;
 
     // @ts-ignore
-    user.restSession = Date.now() + 3000000;
+    user.restSession = Date.now() + 300000;
     await user.save();
 
     const info = await transporter.sendMail({
@@ -107,7 +107,8 @@ router.post("/rest/submit", async (req, res) => {
     );
 
     // @ts-ignore
-    user.restToken = null;
+    user.restToken = undefined;
+    // @ts-ignore
     user.restSession = undefined;
     // @ts-ignore
     await user.save();
