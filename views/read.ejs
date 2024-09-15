@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="refresh" content="5"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include("partials/nav" , { path : "/home" , pathName : "HomePage" }) %>
+        <div class="p-8 relative">
+            <input type="hidden" id="_id" value="<%=id%>">
+            <div id="icon" class="flex gap-2 align-start">
+
+            </div>
+            <br>
+            <h1 id="title" class="uppercase font-bold bg-gray-100 w-fit p-2">Loading...</h1>
+            <pre class="uppercase font-bold bg-gray-100 mt-2 p-2 " id="description">Loading...       
+            </pre>
+            <div id="askPassword"
+                class="min-h-screen w-screen left-0 overflow-hidden opacity-[0.9] bg-gray-200 absolute top-0 flex align-center justify-center">
+
+                <div id="passcode" class="mb-4 w-[50%] mt-[15em]">
+
+                    <label for="encrypt-password" class="block text-gray-700 text-sm font-bold mb-2">Passcode</label>
+                    <input type="password" id="encrypt-password" name="passcode"
+                        class="shadow appearance-none border rounded bg-gray-100 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value="" />
+                    <br>
+                    <button class="mt-3" type="button" onclick="checker()"><span
+                            class="p-2 bg-green-300 rounded">submit</span></button>
+
+                </div>
+
+            </div>
+        </div>
+        <script>
+            const encryptPassword = document.querySelector('#encrypt-password')
+            const title = document.querySelector('#title')
+            const id = document.querySelector('#_id')
+            const description = document.querySelector('#description')
+            const askPassword = document.querySelector('#askPassword')
+            const icon = document.querySelector('#icon')
+            const spaned = document.createElement('span');
+
+            let note;
+
+            fetch(`/read/pass?id=${id.value}`, { method: 'GET' })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    note = data;
+                    enc();                 
+                })
+                .catch(e => console.log(e));
+
+
+
+
+            function enc() {
+                if (!note.encrypt) {
+                    askPassword.style.display = 'none';
+                    spaned.classList.add('p-2', 'bg-green-300', 'rounded');
+                    spaned.innerHTML = '<i class="ri-lock-unlock-line"></i>Available'
+                    icon.appendChild(spaned);
+                    title.textContent = note.title;
+                    description.textContent = note.description;
+                    return true;
+                }
+            }
+
+            function checker() {
+
+                if (note.encrypt) {
+                    spaned.classList.add('p-2', 'bg-red-300', 'rounded');
+                    spaned.innerHTML = '<i class="ri-lock-password-line"></i>Encrypted'
+                    icon.appendChild(spaned);
+                    if (encryptPassword.value == note.passcode) {
+                        askPassword.style.display = 'none';
+                        spaned.innerHTML = '<i class="ri-lock-password-line"></i>Decrypted'
+                        title.textContent = note.title;
+                        description.textContent = note.description;
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
+            }
+
+        </script>
+</body>
+
+</html>

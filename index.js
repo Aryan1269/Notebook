@@ -9,6 +9,7 @@ const createPage = require("./routes/create");
 const deletePage = require("./routes/delete");
 const changePassword = require("./routes/changepassword");
 const edit = require("./routes/edit");
+const read = require("./routes/read");
 
 let store = new mongodb_session({
   uri: "mongodb://127.0.0.1:27017/notebook",
@@ -44,7 +45,9 @@ app.use(createPage);
 app.use(deletePage)
 app.use(changePassword)
 app.use(edit)
+app.use(read)
 
+//routes
 app.get("/", (req, res) => {
   res.render("login", { error: req.flash("wrong") });
 });

@@ -14,13 +14,14 @@
 
         <br>
         <a href="/logout"
-            class="p-2 bg-red-500 shadow shadow-red-400 text-zinc-900 font-semibold absolute rounded-lg right-10">Logout</a>
+            class="p-2 bg-red-500 shadow-lg shadow-red-400 text-zinc-900 font-semibold absolute rounded-lg right-10  hover:scale-150">Logout</a>
         <br>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, 250px) ; place-content: start;"
             class="w-screen h-full align-center p-4 gap-3 mt-3">
 
             <% data.length>0 && data?.map((d)=>{ %>
-                <div class=" max-w-[250px] w-[250px] h-[100px] rounded-md shadow-md shadow-gray-400 p-2">
+                <div
+                    class=" hover:bg-gray-100 hover:ease-in-out max-w-[250px] w-[250px] h-[100px] rounded-md shadow-md shadow-gray-400 p-2">
                     <subnav class="text-xl flex align-center justify-between gap-3 mb-1">
                         <div>
                             <% if (d.encrypt) { %>
@@ -28,19 +29,23 @@
                                 <% } else { %>
                                     <i class="ri-lock-unlock-line p-1"></i>
                                     <% } %>
-                                        <a href="/edit?id=<%=d._id%>"><i class="ri-edit-line ml-2  p-1"></i></a>
+                                        <abbr title="edit" class="no-underline"><a href="/edit?id=<%=d._id%>"><i class="ri-edit-line ml-2  p-1"></i></a></abbr>
                         </div>
                         <span>
                             <%= dateStyle(d.date) %>
                         </span>
-                        <a href="/delete/<%=d._id %>"><i
-                                class="ri-delete-bin-6-fill text-red-400  bg-blue-600 p-1 rounded-md"></i></a>
+                        <abbr title="delete" class="no-underline">
+                            <a href="/delete/<%=d._id %>"><i
+                                    class="ri-delete-bin-6-fill text-red-400  bg-blue-600 p-1 rounded-md"></i></a>
+                        </abbr>
                     </subnav>
                     <hr width="100%" size="1" color="black" noshade>
                     <div class="mt-1 text-black">
                         <b>Title:</b><span class="capitalize ">
                             <%=d.title%>
                         </span>
+                        <br>
+                        <a href="/read?id=<%=d._id%>" class="text-blue-600 underline text-sm">view</a>
                     </div>
                 </div>
                 <% }) %>
