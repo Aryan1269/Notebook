@@ -1,4 +1,4 @@
-const db = require("../config/mongodb.js"); // Ensure the path is correct
+const db = require('../config/mongodb')// Ensure the path is correct
 const joi = require("joi");
 
 const userSchema = new db.Schema({

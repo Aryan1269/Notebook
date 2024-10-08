@@ -2,6 +2,7 @@
   "dependencies": {
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.2.0",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
@@ -14,7 +15,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --env-file=.env --watch  index.js"
+    "dev": "node index.js"
   },
   "keywords": [],
   "author": "",

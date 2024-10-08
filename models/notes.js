@@ -1,4 +1,3 @@
-const { default: mongoose } = require("mongoose");
 const db = require("../config/mongodb");
 const joi = require("joi");
 

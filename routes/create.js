@@ -18,7 +18,7 @@ router.post('/submit',isAuth, async (req,res)=>{
     const user = await userSchema.UserModel.findById(req.session.user);
     
     // @ts-ignore
-    console.log(typeof encrypt);
+   
     const { error } = noteSchema.noteValidate({ title, description , passcode});
     if(error){
       req.flash('error',`${error.details[0].message}`)

@@ -6,7 +6,6 @@ const router = express.Router();
 router.get("/edit", async (req, res) => {
   try {
     const notes = await noteModel.findById(req.query.id);
-    console.table(notes.title)
     res.render("edit", { data: notes });
   } catch (error) {
     console.log(error);

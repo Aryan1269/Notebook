@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const schema = require("./models/users");
@@ -12,7 +13,7 @@ const edit = require("./routes/edit");
 const read = require("./routes/read");
 
 let store = new mongodb_session({
-  uri: "mongodb://127.0.0.1:27017/notebook",
+  uri: process.env.MONGODB_URL,
   collection: "Sessions",
 });
 
@@ -46,6 +47,10 @@ app.use(deletePage)
 app.use(changePassword)
 app.use(edit)
 app.use(read)
+
+//
+
+
 
 //routes
 app.get("/", (req, res) => {
@@ -88,7 +93,7 @@ app.post("/sign_up/new", async (req, res) => {
 
   try {
     let users = await schema.UserModel.findOne({ email: email });
-    console.log(users);
+   
     if (!users) {
       const user = await new schema.UserModel({
         //.create and new does the same thing
@@ -121,9 +126,11 @@ app.get("/logout", (req, res) => {
   });
 });
 
+const PORT = process.env.PORT || 3000;
+
 
 app.get('/rest',(req,res)=>{
   res.render('forgetPassord')
 })
 
-app.listen(3000);
+app.listen(PORT);

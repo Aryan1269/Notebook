@@ -47,7 +47,6 @@ router.post("/rest", async (req, res) => {
     });
 
     // Save the updated user document
-    console.log("Message sent: %s", info.messageId);
 
     res.send(`<script>alert("check email")
     
