@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // @ts-ignore
 mongoose
   .connect(
-    "mongodb+srv://notebook:pQ6VAknLayC9w0hO@notebook.b10xt.mongodb.net/notebook",
+    process.env.MONGODB_URL,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
